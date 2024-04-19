@@ -26,6 +26,7 @@ pipeline {
                 script {
                     sshagent(['ansible-admin']) {
                         sh "scp /Users/mebinmathew/.jenkins/workspace/cicd-complete-2/target/hello-0.0.1-SNAPSHOT.jar ansible-admin@3.87.154.46:/opt/docker"
+                    }
                 }
             }
         }
