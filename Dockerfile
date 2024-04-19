@@ -1,6 +1,6 @@
 ARG HOME_APP=/opt/app
 
-FROM maven:3.8.3-openjdk-17 as maven_build
+FROM maven:3.8.4-openjdk-17 as maven_build
 ARG HOME_APP
 WORKDIR $HOME_APP
 ADD pom.xml .
