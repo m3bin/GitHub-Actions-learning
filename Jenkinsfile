@@ -19,13 +19,14 @@ pipeline {
                     echo 'SonarQube Analysis Completed'
                 }
             }
+        
+        }
         stage('Copy to EC2') {
             steps {
                 scp content: '/Users/mebinmathew/.jenkins/workspace/cicd-complete-2/target/hello-0.0.1-SNAPSHOT.jar', 
                     remote: 'ansible-admin@3.87.154.46:/opt/docker',
                     transferMethod: 'scp'
             }
-        }
         }
     }
 }
