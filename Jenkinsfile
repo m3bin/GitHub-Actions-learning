@@ -19,7 +19,36 @@ pipeline {
                     echo 'SonarQube Analysis Completed'
                 }
             }
-        
+        }
+        stage('Copy Artifact') {
+            steps {
+                sshPublisher(
+                    publishers: [
+                        sshPublisherDesc(
+                            configName: 'ansible-server',
+                            transfers: [
+                                sshTransfer(
+                                    cleanRemote: false,
+                                    excludes: '',
+                                    execCommand: '',
+                                    execTimeout: 120000,
+                                    flatten: false,
+                                    makeEmptyDirs: false,
+                                    noDefaultExcludes: false,
+                                    patternSeparator: '[, ]+',
+                                    remoteDirectory: '//opt//docker',
+                                    remoteDirectorySDF: false,
+                                    removePrefix: 'target',
+                                    sourceFiles: 'target/*.jar'
+                                )
+                            ],
+                            usePromotionTimestamp: false,
+                            useWorkspaceInPromotion: false,
+                            verbose: false
+                        )
+                    ]
+                )
+            }
         }
     }
 }
