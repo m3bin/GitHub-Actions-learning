@@ -23,11 +23,7 @@ pipeline {
         }
         stage('Copy to EC2') {
             steps {
-                script {
-                    sshagent(['ansible-admin']) {
-                        sh "scp /Users/mebinmathew/.jenkins/workspace/cicd-complete-2/target/hello-0.0.1-SNAPSHOT.jar ansible-admin@3.87.154.46:/opt/docker"
-                    }
-                }
+                sshPublisher(publishers: [sshPublisherDesc(configName: 'ansible-server', sshCredentials: [encryptedPassphrase: '{AQAAABAAAAAQ89UOxbxbWik/Q9BFSDiigGq0qANR5bLZYuSJp0qHx9E=}', key: '', keyPath: '', username: 'ansible-admin'], transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '/opt/docker/', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '/Users/mebinmathew/.jenkins/workspace/cicd-complete-2/target/hello-0.0.1-SNAPSHOT.jar')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
             }
         }
     }
