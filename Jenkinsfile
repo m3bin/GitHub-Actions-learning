@@ -20,7 +20,7 @@ pipeline {
                 }
             }
         }
-        stage('Copy Artifact') {
+        stage('Copy artifact to EC2') {
             steps {
                 sshPublisher(
                     publishers: [
