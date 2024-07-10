@@ -11,6 +11,12 @@ pipeline {
                 echo 'Git Checkout Completed'
             }
         }
-
+        stage('Maven Build') {
+            steps {
+                // Run maven build
+                sh 'mvn clean package -DskipTests'
+                echo 'Maven build Completed'
+            }
+        }
     }
 }
