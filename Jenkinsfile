@@ -5,12 +5,6 @@ pipeline {
     }
 
     stages {
-        stage('Git Checkout') {
-            steps {
-                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/m3bin/Hello.git']])
-                echo 'Git Checkout Completed'
-            }
-        }
         stage('Maven Build') {
             steps {
                 // Run maven build
