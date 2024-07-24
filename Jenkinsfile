@@ -9,7 +9,7 @@ pipeline {
             steps {
                 // Run maven build
                 sh 'mvn clean package -DskipTests'
-                echo 'Maven build Completed'
+                echo 'Maven build completed'
             }
         }
         stage('Copy artifact to EC2') {
@@ -41,7 +41,42 @@ pipeline {
                         )
                     ]
                 )
-                echo 'Copying Jar to EC2 Completed'
+                echo 'Copying artefact to EC2 completed'
+            }
+        }
+        stage('Create Docker Image') {
+            steps {
+                //Using Ansible to create docker image and push to docker hub
+                sshPublisher(
+                    publishers: [
+                        sshPublisherDesc(
+                            configName: 'ansible-server',
+                            transfers: [
+                                sshTransfer(
+                                    cleanRemote: false,
+                                    excludes: '',
+                                    execCommand: '''
+                                        cd /opt/docker/
+                                        ansible-playbook hello-app.yml
+                                    ''',
+                                    execTimeout: 120000,
+                                    flatten: false,
+                                    makeEmptyDirs: false,
+                                    noDefaultExcludes: false,
+                                    patternSeparator: '[, ]+',
+                                    remoteDirectory: '',
+                                    remoteDirectorySDF: false,
+                                    removePrefix: '',
+                                    sourceFiles: ''
+                                )
+                            ],
+                            usePromotionTimestamp: false,
+                            useWorkspaceInPromotion: false,
+                            verbose: false
+                        )
+                    ]
+                )
+                echo 'Docker image creation and push completed'
             }
         }
     }
