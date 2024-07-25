@@ -29,7 +29,7 @@ pipeline {
                                     makeEmptyDirs: false,
                                     noDefaultExcludes: false,
                                     patternSeparator: '[, ]+',
-                                    remoteDirectory: '//opt//docker',
+                                    remoteDirectory: '//opt//deploy',
                                     remoteDirectorySDF: false,
                                     removePrefix: 'target',
                                     sourceFiles: 'target/*.jar'
@@ -56,7 +56,7 @@ pipeline {
                                     cleanRemote: false,
                                     excludes: '',
                                     execCommand: '''
-                                        cd /opt/docker/
+                                        cd /opt/deploy/
                                         ansible-playbook hello-app.yml
                                     ''',
                                     execTimeout: 120000,
