@@ -79,5 +79,40 @@ pipeline {
                 echo 'Docker image creation and push completed'
             }
         }
+        stage('Deploy to EKS cluster') {
+            steps {
+                //Using Ansible to cdeploy to EKS clusters
+                sshPublisher(
+                    publishers: [
+                        sshPublisherDesc(
+                            configName: 'ansible-server',
+                            transfers: [
+                                sshTransfer(
+                                    cleanRemote: false,
+                                    excludes: '',
+                                    execCommand: '''
+                                        cd /opt/deploy/
+                                        ansible-playbook kubernetes-hello-app.yml
+                                    ''',
+                                    execTimeout: 120000,
+                                    flatten: false,
+                                    makeEmptyDirs: false,
+                                    noDefaultExcludes: false,
+                                    patternSeparator: '[, ]+',
+                                    remoteDirectory: '',
+                                    remoteDirectorySDF: false,
+                                    removePrefix: '',
+                                    sourceFiles: ''
+                                )
+                            ],
+                            usePromotionTimestamp: false,
+                            useWorkspaceInPromotion: false,
+                            verbose: false
+                        )
+                    ]
+                )
+                echo 'EKS deployment completed'
+            }
+        }
     }
 }
