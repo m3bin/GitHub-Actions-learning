@@ -34,7 +34,7 @@ jobs:
       with:
         context: .    
         push: true
-        tags: latest
+        tags: hello2:latest
         image: m3bin/hello2
         registry: docker.io
         username: ${{ secrets.DOCKER_USERNAME }}
