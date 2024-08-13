@@ -55,7 +55,7 @@ jobs:
     - name: Setup kubectl
       uses: azure/setup-kubectl@v3
       with:
-        version: v1.30.0-eks-036c24b
+        version: v1.30.3
    
     - name: Configure kubectl to use EKS cluster
       run: |
