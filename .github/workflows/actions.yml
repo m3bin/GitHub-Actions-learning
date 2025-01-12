@@ -36,7 +36,7 @@ jobs:
     - name: Build and Push Docker Image
       uses: mr-smithers-excellent/docker-build-push@v6
       with:
-        image: m3bin/hello2
+        image: m3bin/hello
         registry: docker.io
         tags: latest
         username: ${{ secrets.DOCKER_USERNAME }}
